@@ -6,19 +6,25 @@ from botocore.exceptions import ClientError
 from django.utils.html import mark_safe
 from django.conf import settings
 from order.models import Quote
+from django.template.loader import get_template
 
 
 ############################################################################################################
  # Inlines
 class TaskInline(admin.TabularInline):
     model = Task
-    list_display = ('status', 'description','assigned_group','image_preview')
-    readonly_fields = ('status', 'description','assigned_group','image_preview')
+    fields = ('status', 'description','assigned_group', 'image_preview')
+    readonly_fields = ('description','image_preview')
     extra = 0
+ #  template = 'admin/inline_model.html'
+
 
     def has_delete_permission(self, request, obj=None):
         return False  # Disable deleting existing records
-   
+    
+ #   def has_add_permission(self, request, obj=None):
+        # Allow adding new rows only if the parent object has been saved
+    #    return obj is not None and obj.pk
     def has_add_permission(self, request, obj=None):
         # Disable the "Add another" button
          return False
@@ -43,6 +49,8 @@ class TaskInline(admin.TabularInline):
                 return ""  # Return an empty string or any default value when there is no image
         except ClientError as e:
             return f"Error generating URL: {e}"
+        
+  
 
 
 class QuoteInline(admin.TabularInline):
@@ -55,15 +63,21 @@ class QuoteInline(admin.TabularInline):
 class WorkOrderAdmin(admin.ModelAdmin):
     list_display = ('status','house','coordinator', 'date_opened', 'date_closed', )
     inlines = [TaskInline]
-
-    fieldsets = (
+   
+   
+    fieldsets = [
+       
         ('Work Order Information', {
             'fields': ('status','house','coordinator', 'date_opened', 'date_closed','subject'),
         }),
+     
          ('Add Task', {
-            'fields': ('image', 'assigned_group', 'description', ),
+            'fields': ('image', 'assigned_group', 'description',),
         }),
-    )
+    ]
+
+ 
+  
 
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)

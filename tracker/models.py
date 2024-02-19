@@ -17,7 +17,7 @@ class WorkOrder(models.Model):
     house = models.ForeignKey(CommunityEntity,on_delete=models.CASCADE, null=True,blank=True,)
     coordinator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     date_opened = models.DateField(default=date.today)
-    date_closed = models.DateField(null=True, blank=True)
+    date_closed = models.DateField(blank=True,  null =True)
     assigned_group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True)
     image = models.ImageField(upload_to='images/',blank=True,  null =True)
     description = models.TextField(blank=True, null=True)
