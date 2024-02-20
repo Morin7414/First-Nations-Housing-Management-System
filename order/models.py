@@ -11,6 +11,8 @@ class Quote(models.Model):
     )
     status = models.CharField(max_length=20, choices=STATUS_CHOICES,blank=True,  null =True)
     task = models.ForeignKey(Task, on_delete=models.SET_NULL, null=True)
-    image = models.ImageField(blank=True,  null =True)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    image = models.ImageField(upload_to='quotes/',blank=True,  null =True)
+    amountCAD = models.DecimalField(max_digits=10, decimal_places=2)
     date_requested = models.DateField(default=date.today)
+    def __str__(self):
+        return f"Qoute # {self.id}"

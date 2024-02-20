@@ -1,0 +1,15 @@
+{% extends "admin/edit_inline/tabular.html" %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <style>
+        /* Add custom CSS if needed */
+    </style>
+{% endblock %}
+
+{% block inline_field_sets %}
+    {% for inline_admin_formset in inline_admin_formsets %}
+        {% include "admin/edit_inline/tabular.html" %}
+        <a href="{% url 'admin:tracker_Task_change' inline_admin_formset.original.pk %}" class="button">View</a>
+    {% endfor %}
+{% endblock %}

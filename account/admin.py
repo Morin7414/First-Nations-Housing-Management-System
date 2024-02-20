@@ -10,13 +10,10 @@ class AccountInline(admin.StackedInline):
     verbose_name_plural = 'Accounts'
 
 class AccountAdmin(UserAdmin):
-    inlines  = (AccountInline, )
-    list_display = ('username',  'email', 'first_name', 'last_name','get_occupation', 'get_phone', 'get_cell',)
+    inlines  = [AccountInline]
+    list_display = ('username',  'email', 'first_name', 'last_name','get_phone', 'get_cell',)
 
 
-    def get_occupation(self, obj):
-        return obj.account.occupation if hasattr(obj, 'account') else None
-    
     def get_phone(self, obj):
         return obj.account.work_phone if hasattr(obj, 'account') else None
     
@@ -24,7 +21,7 @@ class AccountAdmin(UserAdmin):
     def get_cell(self, obj):
         return obj.account.cell_phone if hasattr(obj, 'account') else None
 
-    get_occupation.short_description = 'Occupation'
+
     get_phone.short_description = 'Work Phone'
     get_cell.short_description = 'Cell Phone'
 
