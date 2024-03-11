@@ -2,8 +2,6 @@ from django.contrib import admin
 from .models import  CommunityEntity
 # Register your models here.
 
-
-    
 class CommunityAdmin(admin.ModelAdmin):
     list_display = ('house_number','primary_owner', 'num_people','longitude','latitude')
    
@@ -14,8 +12,5 @@ class CommunityAdmin(admin.ModelAdmin):
             'fields': ('house_number','primary_owner', 'num_people','longitude','latitude'),
         }),
     ]
-
-
-
 
 admin.site.register(CommunityEntity, CommunityAdmin)

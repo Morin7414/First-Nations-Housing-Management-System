@@ -43,23 +43,26 @@ MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+#ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+   
+    'tracker',
+    'community_units',
+
+    'baton',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tracker',
-    'community_units',
-    'order',
-    'account.apps.AccountConfig'
+    'account.apps.AccountConfig',
+    'baton.autodiscover',
 ]
 
 MIDDLEWARE = [
@@ -138,14 +141,53 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+#STATIC_URL = 'static/'
+
+#STATICFILES_DIRS = [
+ #   os.path.join(BASE_DIR, 'static'),
+#]
+
+
+# Use '/staticfiles/' as the URL for serving static files
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+# Use the default static files storage
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
+# Define the directory where collected static files will be stored
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+BATON = {
+    'SITE_HEADER': 'Speenz',
+    'SITE_TITLE': 'Speenz',
+    'INDEX_TITLE': 'Site administration',
+    'SUPPORT_HREF': '',
+    'COPYRIGHT': 'copyright © 2024 Speenz Solutions. All Rights Reserved', # noqa
+    'POWERED_BY': 'Speenz Solutions',
+    'CONFIRM_UNSAVED_CHANGES': True,
+    'SHOW_MULTIPART_UPLOADING': True,
+    'ENABLE_IMAGES_PREVIEW': True,
+    'CHANGELIST_FILTERS_IN_MODAL': True,
+    'CHANGELIST_FILTERS_ALWAYS_OPEN': False,
+    'CHANGELIST_FILTERS_FORM': True,
+    'CHANGEFORM_FIXED_SUBMIT_ROW': True,
+    'MENU_ALWAYS_COLLAPSED': False,
+    'MENU_TITLE': 'Menu',
+    'MESSAGES_TOASTS': False,
+    'GRAVATAR_DEFAULT_IMG': 'retro',
+    'GRAVATAR_ENABLED': True,
+    'LOGIN_SPLASH': '/static/core/img/login-splash.png',
+    'FORCE_THEME': None,
+    'SEARCH_FIELD': {
+        'label': 'Search contents...',
+        'url': '/search/',
+    },
+ 
+}

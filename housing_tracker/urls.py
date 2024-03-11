@@ -14,8 +14,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
+#from django.contrib import admin
+from baton.autodiscover import admin
 from django.urls import path, include
+from django.shortcuts import redirect
 
 admin.site.site_header = "Indigenous Housing Solutions"
 admin.site.site_title = "Indigenous Housing Solutions"
@@ -25,4 +27,6 @@ admin.site.index_title = "Welcome to the Dashboard"
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('tracker.urls')),
+    path('baton/', include('baton.urls')),
+    path('', lambda request: redirect('admin/tracker/workorder/')),  # Redirect to your app's URL
 ]
